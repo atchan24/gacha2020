@@ -13,6 +13,16 @@
   }
 }
 
+button {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.card {
+  margin-right: 2%;
+  margin-bottom: 1%;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
