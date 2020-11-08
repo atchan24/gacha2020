@@ -52,37 +52,41 @@ class App extends React.Component {
           <HeaderNav/>
         </header>
         <main>
-          <div className="App">
-            <p>
-              ESports Tycoon
-            </p>
-            <div>
-              <ul>
-                <li>Current Income: {this.state.totalIncome}</li>
-                <li>Current Salary: {this.state.totalExpense}</li>
-                <li>Current Profit: {this.state.totalProfit}</li>
-                <li>Current Power Level: {this.state.totalPowerLevel}</li>
-                <li>Current Funds: {this.state.totalFunds}</li>
-              </ul>
-              <p>Payment in: {this.state.secondsTilUpdate}s</p>
-            </div>
-            <form
-              onSubmit = {(e) => {
-                e.preventDefault();
-                if (this.state.rollCost <= this.state.totalFunds) {
-                  this.setState({
-                    totalFunds: this.state.totalFunds - this.state.rollCost,
-                  })
-                  this.roll();
-                } else {
-                  console.log('not enough money to roll');
-                }
-              }}
-              >
-                <RollButton rollCost={this.state.rollCost}> Roll </RollButton>
-            </form>
-            {cards}
-          </div>
+          <Container fluid>
+            <Row>
+              <Col sm={4}>
+                  <p> ESports Tycoon </p>
+                <div>
+                  <ul>
+                    <li>Current Income: {this.state.totalIncome}</li>
+                    <li>Current Salary: {this.state.totalExpense}</li>
+                    <li>Current Profit: {this.state.totalProfit}</li>
+                    <li>Current Power Level: {this.state.totalPowerLevel}</li>
+                    <li>Current Funds: {this.state.totalFunds}</li>
+                  </ul>
+                  <p>Payment in: {this.state.secondsTilUpdate}s</p>
+                </div>
+                <form
+                  onSubmit = {(e) => {
+                    e.preventDefault();
+                    if (this.state.rollCost <= this.state.totalFunds) {
+                      this.setState({
+                        totalFunds: this.state.totalFunds - this.state.rollCost,
+                      })
+                      this.roll();
+                    } else {
+                      console.log('not enough money to roll');
+                    }
+                  }}
+                  >
+                    <RollButton rollCost={this.state.rollCost}> Roll </RollButton>
+                </form>
+              </Col> 
+              <Col sm={8} style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
+                {cards}
+              </Col>
+            </Row>
+          </Container> 
         </main>
       </React.Fragment>
     );
