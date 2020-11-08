@@ -92,6 +92,10 @@ class App extends React.Component {
                       <td> Next Financial Period </td> 
                       <td> {this.state.secondsTilUpdate} </td> 
                     </tr>
+                    <tr>
+                      <td> Next Competitive Event </td> 
+                      <td> {this.state.secondsTilTourney} </td> 
+                    </tr>
                   </tbody>
                 </Table>
                 <form
