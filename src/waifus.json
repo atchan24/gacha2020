@@ -1,0 +1,10 @@
+{
+    "waifus":[
+        {"name": "Test", "power": 10, "rarity": 3, "income": 40, "salary": 20, "description": "a test waifu"},
+        {"name": "Test1", "power": 101, "rarity": 5, "income": 130, "salary": 60, "description": "a test waifu"},
+        {"name": "Test2", "power": 40, "rarity": 4, "income": 50, "salary": 40, "description": "a test waifu"},
+        {"name": "Test3", "power": 30, "rarity": 3, "income": 20, "salary": 10, "description": "a test waifu"},
+        {"name": "Test4", "power": 20, "rarity": 3, "income": 30, "salary": 15, "description": "a test waifu"},
+        {"name": "Test5", "power": 700, "rarity": 4, "income": 30, "salary": 25, "description": "a test waifu"}
+    ]
+}
