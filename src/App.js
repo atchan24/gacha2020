@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import waifus from './waifus.json';
-import {Card, Button, Row, Col, Container, Alert, Spinner, Navbar, Nav, NavDropdown, ListGroup, ListGroupItem} from 'react-bootstrap';
+import {Card, Button, Row, Col, Container, Table, Alert, Spinner, Navbar, Nav, NavDropdown, ListGroup, ListGroupItem} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
 class App extends React.Component {
@@ -55,17 +55,40 @@ class App extends React.Component {
           <Container fluid>
             <Row>
               <Col sm={4}>
-                  <p> ESports Tycoon </p>
-                <div>
-                  <ul>
-                    <li>Current Income: {this.state.totalIncome}</li>
-                    <li>Current Salary: {this.state.totalExpense}</li>
-                    <li>Current Profit: {this.state.totalProfit}</li>
-                    <li>Current Power Level: {this.state.totalPowerLevel}</li>
-                    <li>Current Funds: {this.state.totalFunds}</li>
-                  </ul>
-                  <p>Payment in: {this.state.secondsTilUpdate}s</p>
-                </div>
+                <Table striped bordered hover size="sm">
+                  <thead>
+                    <tr>
+                      <th> Field </th>
+                      <th> Value </th> 
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> Income </td> 
+                      <td> {this.state.totalIncome} </td> 
+                    </tr>
+                    <tr>
+                      <td> Salary </td> 
+                      <td> {this.state.totalExpense} </td> 
+                    </tr>
+                    <tr>
+                      <td> Profit </td> 
+                      <td> {this.state.totalProfit} </td> 
+                    </tr>
+                    <tr>
+                      <td> Power Level </td> 
+                      <td> {this.state.totalPowerLevel} </td> 
+                    </tr>
+                    <tr>
+                      <td> Effective Income </td> 
+                      <td> {this.state.totalFunds} </td> 
+                    </tr>
+                    <tr>
+                      <td> Next Financial Period </td> 
+                      <td> {this.state.secondsTilUpdate} </td> 
+                    </tr>
+                  </tbody>
+                </Table>
                 <form
                   onSubmit = {(e) => {
                     e.preventDefault();

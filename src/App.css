@@ -23,6 +23,10 @@ button {
   margin-bottom: 1%;
 }
 
+main {
+  margin-top: 1%;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
