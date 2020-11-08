@@ -38,9 +38,13 @@ class App extends React.Component {
     let temp = this.state.currentWaifus;
 
     // Add a line for each waifu, this can be modified to anything you want using temp[i]'s fields
-    for (let i = 0; i < temp.length; i++) {
-      waifus.push(<p>Name: {temp[i].name} | Power Level: {temp[i].power} | Income: {temp[i].income} | Salary: {temp[i].salary}</p>)
-    }
+    // for (let i = 0; i < temp.length; i++) {
+    //   waifus.push(<p>Name: {temp[i].name} | Power Level: {temp[i].power} | Income: {temp[i].income} | Salary: {temp[i].salary}</p>)
+    // }
+
+    let cards = temp.map((waifu) => {
+      return <PlayerCard name={waifu.name} description={waifu.description} className="p-2"/>
+    });
 
     return (
       <React.Fragment>
@@ -75,9 +79,9 @@ class App extends React.Component {
                 }
               }}
               >
-                <button>Roll</button>
+                <RollButton rollCost={this.state.rollCost}> Roll </RollButton>
             </form>
-            {waifus}
+            {cards}
           </div>
         </main>
       </React.Fragment>
@@ -134,7 +138,7 @@ export class HeaderNav extends React.Component {
   render() {
     return (
       <Navbar bg="light">
-        <Navbar.Brand>E-Gacha</Navbar.Brand>
+        <Navbar.Brand><b> Esports Tycoon </b> | An Esports Gacha Game</Navbar.Brand>
       </Navbar>
     );
   }
@@ -142,8 +146,11 @@ export class HeaderNav extends React.Component {
 
 export class RollButton extends React.Component {
   render() {
+    let rollCost = "Roll: -" + this.props.rollCost;
     return (
-      <Button variant="warning" size="lg" style={{ width: '18rem'}}>Roll: -5</Button>
+      <button>
+        <Button variant="warning" size="lg" style={{ width: '18rem'}}>{rollCost}</Button>
+      </button>
     );
   }
 }
@@ -164,31 +171,12 @@ export class PlayerCard extends React.Component {
   }
 
   render() {
-    let name = this.props.name; 
-    let rarity = this.props.rarity; 
-    let description = this.props.description;
-    let salary = this.props.salary;
-    let income = this.props.income;
-    let power = this.props.power;
-    let stars = ""
-    for (let i = 0; i < rarity; i++) {
-      stars += "★";
-    }
+    let description = this.props.description; 
+    let imgPath = "/img/" + this.props.name + ".png";
     return (
       <Card style={{ width: '18rem'}}>
-        <Card.Header as="h5">{stars}</Card.Header>
-        <Card.Img variant="top" src="/jowosie.jpg"/>
-        <Card.Body>
-          <Card.Title>{name}</Card.Title>
-          <Card.Text>
-            {description}
-          </Card.Text>
-          <ListGroup className="list-group-flush">
-            <ListGroupItem><b>Power:</b>  {power}</ListGroupItem>
-            <ListGroupItem><b>Salary:</b> {salary}</ListGroupItem>
-            <ListGroupItem><b>Income:</b> {income}</ListGroupItem>
-          </ListGroup>
-        </Card.Body>
+        <Card.Img variant="top" src={imgPath}/>
+        <Card.Footer> {description} </Card.Footer>
       </Card>
       );
   }
