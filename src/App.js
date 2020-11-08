@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import waifus from './waifus.json';
+import {Card, Button, Row, Col, Container, Alert, Spinner, Navbar, Nav, NavDropdown, ListGroup, ListGroupItem} from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
 
 class App extends React.Component {
   constructor(props) {
