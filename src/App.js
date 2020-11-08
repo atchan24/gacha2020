@@ -12,10 +12,11 @@ class App extends React.Component {
       totalProfit: 0,
       currentWaifus: [],
       rollCost: 10,
-      totalFunds: 100,
-      rates: [0, 70, 95],
-      secondsTilUpdate: 30,
+      totalFunds: 100, // Change this number to adjust the starting money
+      rates: [0, 70, 95], // Change these numbers to adjust the rates
+      secondsTilUpdate: 30, // Change this number to adjust the timing on updates
     };
+    // Probably don't touch these lines
     this.timer = 0;
     this.startTimer = this.startTimer.bind(this);
     this.countDown = this.countDown.bind(this);
@@ -75,6 +76,7 @@ class App extends React.Component {
   }
 
   // The roll function, calculates first the rarity of the unit to get and then picks from that rarity pool randomly
+  // If we want to change how expensive rolls become as time goes on we would do that here
   roll = () => {
     let rollChance = Math.random() * 100;
     let rollRate = 2;
