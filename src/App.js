@@ -43,37 +43,44 @@ class App extends React.Component {
     }
 
     return (
-      <div className="App">
-          <p>
-            ESports Tycoon
-          </p>
-          <div>
-            <ul>
-              <li>Current Income: {this.state.totalIncome}</li>
-              <li>Current Salary: {this.state.totalExpense}</li>
-              <li>Current Profit: {this.state.totalProfit}</li>
-              <li>Current Power Level: {this.state.totalPowerLevel}</li>
-              <li>Current Funds: {this.state.totalFunds}</li>
-            </ul>
-            <p>Payment in: {this.state.secondsTilUpdate}s</p>
+      <React.Fragment>
+        <header>
+          <HeaderNav/>
+        </header>
+        <main>
+          <div className="App">
+            <p>
+              ESports Tycoon
+            </p>
+            <div>
+              <ul>
+                <li>Current Income: {this.state.totalIncome}</li>
+                <li>Current Salary: {this.state.totalExpense}</li>
+                <li>Current Profit: {this.state.totalProfit}</li>
+                <li>Current Power Level: {this.state.totalPowerLevel}</li>
+                <li>Current Funds: {this.state.totalFunds}</li>
+              </ul>
+              <p>Payment in: {this.state.secondsTilUpdate}s</p>
+            </div>
+            <form
+              onSubmit = {(e) => {
+                e.preventDefault();
+                if (this.state.rollCost <= this.state.totalFunds) {
+                  this.setState({
+                    totalFunds: this.state.totalFunds - this.state.rollCost,
+                  })
+                  this.roll();
+                } else {
+                  console.log('not enough money to roll');
+                }
+              }}
+              >
+                <button>Roll</button>
+            </form>
+            {waifus}
           </div>
-        <form
-          onSubmit = {(e) => {
-            e.preventDefault();
-            if (this.state.rollCost <= this.state.totalFunds) {
-              this.setState({
-                totalFunds: this.state.totalFunds - this.state.rollCost,
-              })
-              this.roll();
-            } else {
-              console.log('not enough money to roll');
-            }
-          }}
-          >
-            <button>Roll</button>
-        </form>
-        {waifus}
-      </div>
+        </main>
+      </React.Fragment>
     );
   }
 
