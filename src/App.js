@@ -17,6 +17,11 @@ class App extends React.Component {
       totalFunds: 100, // Change this number to adjust the starting money
       rates: [0, 70, 95], // Change these numbers to adjust the rates
       secondsTilUpdate: 30, // Change this number to adjust the timing on updates
+      secondsTilTourney: 60,
+      events: ["Worlds", "MSI", "ESL", "MLG", "TI", "Rivals"],
+      requiredPower: 100,
+      entryCost: 50,
+      firstTimeDebt: true,
     };
     // Probably don't touch these lines
     this.timer = 0;
@@ -65,6 +70,7 @@ class App extends React.Component {
                     <li>Current Funds: {this.state.totalFunds}</li>
                   </ul>
                   <p>Payment in: {this.state.secondsTilUpdate}s</p>
+                  <p>Tournament in: {this.state.secondsTilTourney}s</p>
                 </div>
                 <form
                   onSubmit = {(e) => {
@@ -75,11 +81,11 @@ class App extends React.Component {
                       })
                       this.roll();
                     } else {
-                      console.log('not enough money to roll');
+                      alert('Not enough money to scout players!');
                     }
                   }}
                   >
-                    <RollButton rollCost={this.state.rollCost}> Roll </RollButton>
+                    <RollButton rollCost={this.state.rollCost}> Scout a Player </RollButton>
                 </form>
               </Col> 
               <Col sm={8} style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
@@ -111,9 +117,9 @@ class App extends React.Component {
       totalExpense: this.state.totalExpense + unit.salary,
       totalIncome: this.state.totalIncome + unit.income,
       totalProfit: this.state.totalProfit + (unit.income - unit.salary),
-      currentWaifus: temp
+      currentWaifus: temp,
+      rollCost: this.state.rollCost + 10
     });
-    console.log(this.state.currentWaifus);
   }
 
   // Starts the timer and continues to update it
@@ -126,14 +132,57 @@ class App extends React.Component {
   }
 
   // Increments the timer down every second. This is where the end check is made so anything to be done
-  // when the timer reaches 0 should be done here
+  // when the timer reaches 0 should be done here. Tournament and game over condition have been added.
   countDown = () => {
     let seconds = this.state.secondsTilUpdate - 1;
-    this.setState({secondsTilUpdate: seconds});
+    let secondsTourney = this.state.secondsTilTourney - 1;
+    this.setState({
+      secondsTilUpdate: seconds,
+      secondsTilTourney: secondsTourney
+    });
 
     if (seconds === -1) {
       this.startTimer();
       this.setState({totalFunds: this.state.totalFunds + this.state.totalProfit});
+    }
+    if (this.state.secondsTilTourney === -1) {
+      let events = this.state.events;
+      let event = events[Math.floor(Math.random() * events.length)];
+      alert("It's time for a tournament! Your team will be attending " + event + 
+            "! Do you have what it takes? It'll cost " + this.state.entryCost + " and you'll need at least " + this.state.requiredPower + " power.");
+      if (this.state.totalFunds < 0) {
+        if (this.state.firstTimeDebt) {
+          alert("You're in debt but a kind investor gave you a one time bonus. You have to miss this tournament, so make sure you manage your funds! Don't mess it up!");
+          this.setState({
+            totalFunds: this.state.totalFunds + 150,
+            firstTimeDebt: false,
+            secondsTilTourney: 60,
+            entryCost: this.state.entryCost + 50,
+          });
+        } else {
+          alert("You didn't have enough money to enter the tournament since you're already in debt and all of your fans are disappointed. Your career in esports is over!");
+          alert("You failed to make it big in esports... But if you refresh the page, you can try again!");
+          return;
+        }
+      } else {     
+        if (this.state.totalFunds < this.state.entryCost) {
+          alert("You didn't have enough to enter, but you managed to go into debt to enter! Let's hope it pays off...");
+        }
+        let earning = 0;
+        if (this.state.totalPowerLevel >= this.state.requiredPower) {
+          alert("You won the event! The prize was " + this.state.entryCost * 2 + "!");
+          earning = this.state.entryCost * 2;
+        } else {
+          alert("Your team wasn't strong enough to win... Try to scout new talent to strengthen your squad!");
+          earning = this.state.entryCost * -1;
+        }
+        this.setState({
+          totalFunds: this.state.totalFunds + earning,
+          entryCost: this.state.entryCost + 50,
+          secondsTilTourney: 60,
+          requiredPower: this.state.requiredPower + 100
+        });
+      }
     }
   }
 }
@@ -150,7 +199,7 @@ export class HeaderNav extends React.Component {
 
 export class RollButton extends React.Component {
   render() {
-    let rollCost = "Roll: -" + this.props.rollCost;
+    let rollCost = "Scout a player: -" + this.props.rollCost;
     return (
       <button>
         <Button variant="warning" size="lg" style={{ width: '18rem'}}>{rollCost}</Button>
