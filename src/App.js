@@ -1,7 +1,11 @@
 import React from 'react';
 import './App.css';
 import waifus from './waifus.json';
-import {Card, Button, Row, Col, Container, Table, Alert, Spinner, Navbar, Nav, NavDropdown, ListGroup, ListGroupItem} from 'react-bootstrap';
+import HeaderNav from './HeaderNav';
+import PlayerCard from './PlayerCard';
+import RollButton from './RollButton';
+import VentureCapitalButton from './VentureCapitalButton';
+import {Row, Col, Container, Table} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
 class App extends React.Component {
@@ -41,12 +45,6 @@ class App extends React.Component {
     // Create an array that we can push waifus to to render
     const waifus = [];
     let temp = this.state.currentWaifus;
-
-    // Add a line for each waifu, this can be modified to anything you want using temp[i]'s fields
-    // for (let i = 0; i < temp.length; i++) {
-    //   waifus.push(<p>Name: {temp[i].name} | Power Level: {temp[i].power} | Income: {temp[i].income} | Salary: {temp[i].salary}</p>)
-    // }
-
     let cards = temp.map((waifu) => {
       return <PlayerCard name={waifu.name} description={waifu.description} className="p-2"/>
     });
@@ -69,6 +67,10 @@ class App extends React.Component {
                   </thead>
                   <tbody>
                     <tr>
+                      <td> Current Funds </td> 
+                      <td> {this.state.totalFunds} </td> 
+                    </tr>
+                    <tr>
                       <td> Income </td> 
                       <td> {this.state.totalIncome} </td> 
                     </tr>
@@ -83,10 +85,6 @@ class App extends React.Component {
                     <tr>
                       <td> Power Level </td> 
                       <td> {this.state.totalPowerLevel} </td> 
-                    </tr>
-                    <tr>
-                      <td> Effective Income </td> 
-                      <td> {this.state.totalFunds} </td> 
                     </tr>
                     <tr>
                       <td> Next Financial Period </td> 
@@ -111,8 +109,9 @@ class App extends React.Component {
                     }
                   }}
                   >
-                    <RollButton rollCost={this.state.rollCost}> Scout a Player </RollButton>
+                <RollButton rollCost={this.state.rollCost}> Scout a Player </RollButton>
                 </form>
+                <VentureCapitalButton/>
               </Col> 
               <Col sm={8} style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
                 {cards}
@@ -210,54 +209,6 @@ class App extends React.Component {
         });
       }
     }
-  }
-}
-
-export class HeaderNav extends React.Component {
-  render() {
-    return (
-      <Navbar bg="light">
-        <Navbar.Brand><b> Esports Tycoon </b> | An Esports Gacha Game</Navbar.Brand>
-      </Navbar>
-    );
-  }
-}
-
-export class RollButton extends React.Component {
-  render() {
-    let rollCost = "Scout a player: -" + this.props.rollCost;
-    return (
-      <button>
-        <Button variant="warning" size="lg" style={{ width: '18rem'}}>{rollCost}</Button>
-      </button>
-    );
-  }
-}
-
-export class VentureCapitalButton extends React.Component {
-  render() {
-    return (
-      <Button variant="secondary" size="lg" style={{ width: '18rem'}}>Raise Venture Capital: +100</Button>
-    );
-  }
-}
-
-
-export class PlayerCard extends React.Component {
-
-  constructor(props){
-    super(props);
-  }
-
-  render() {
-    let description = this.props.description; 
-    let imgPath = "/img/" + this.props.name + ".png";
-    return (
-      <Card style={{ width: '18rem'}}>
-        <Card.Img variant="top" src={imgPath}/>
-        <Card.Footer> {description} </Card.Footer>
-      </Card>
-      );
   }
 }
 
